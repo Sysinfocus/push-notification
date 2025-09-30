@@ -1,4 +1,5 @@
-self.addEventListener('push', function(event) {
+self.addEventListener('push', function (event) {  
+  console.log(event.data);
   const data = event.data.json();
   const notificationTitle = data.notification.title;
   const notificationOptions = {
@@ -12,7 +13,7 @@ self.addEventListener('push', function(event) {
   );
 });
 
-self.addEventListener('notificationclick', function(event) {
+self.addEventListener('notificationclick', function (event) {
   event.notification.close();
   // Handle notification click, e.g., open a URL from event.notification.data.url
   if (event.notification.data && event.notification.data.url) {
