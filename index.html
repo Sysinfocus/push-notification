@@ -8,13 +8,16 @@
 </head>
 
 <body>
-  <button>Subscribe</button>
+  <div style="font-family:monospace;font-size:16px;text-align:center;margin:2rem;white-space:pre-wrap;"></div>
+  <div style="display:flex;justify-content:center;">
+    <button>Subscribe</button>
+  </div>
 
   <script>
 
     window.addEventListener("load", async () => {
       let sw = await navigator.serviceWorker.register("./sw.js");
-      console.log(sw);
+      // console.log(sw);
     })
 
     const btn = document.querySelector("button");
@@ -24,7 +27,8 @@
         userVisibleOnly: true,
         applicationServerKey: 'BKuxe0OCKZf9WfsU--rLgUccRByG5cYnBwMgBdV4wlL00GIYrTwgopfQncL8SeLOi53iNakwGsB1PwlneJtSf9I'
       })
-      console.log(JSON.stringify(push));
+      document.querySelector("div").innerHTML= JSON.stringify(push);
+      // console.log(JSON.stringify(push));
     }
 
     btn.onclick = async () => await subscribe();
