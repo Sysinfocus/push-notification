@@ -1,25 +1,21 @@
-self.addEventListener("push", e => {
-  console.log(e.options, e.data)
-  // var options = {
-  //   body: 'This notification was generated from a push!',
-  //   icon: 'images/example.png',
-  //   vibrate: [100, 50, 100],
-  //   data: {
-  //     dateOfArrival: Date.now(),
-  //     primaryKey: '2'
-  //   },
-  //   actions: [
-  //     {
-  //       action: "explore",
-  //       title: "Explore this new world",
-  //       icon: "images/checkmark.png",        
-  //     },
-  //     {
-  //       action: "close",
-  //       title: "Close",
-  //       icon: "images/xmark.png"
-  //     }
-  //   ]
-  // };
-  e.waitUntil(self.registration.showNotification('Hello!', e.options));
+self.addEventListener('push', function(event) {
+  const data = event.data.json();
+  const notificationTitle = data.notification.title;
+  const notificationOptions = {
+    body: data.notification.body,
+    icon: data.notification.icon, // This will use the icon URL from the payload
+    data: data.notification.data // Optional: Custom data for handling clicks
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(notificationTitle, notificationOptions)
+  );
+});
+
+self.addEventListener('notificationclick', function(event) {
+  event.notification.close();
+  // Handle notification click, e.g., open a URL from event.notification.data.url
+  if (event.notification.data && event.notification.data.url) {
+    clients.openWindow(event.notification.data.url);
+  }
 });
