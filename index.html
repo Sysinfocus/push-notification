@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Push Notification</title>
+</head>
+
+<body>
+  <button>Subscribe</button>
+
+  <script>
+
+    window.addEventListener("load", async () => {
+      let sw = await navigator.serviceWorker.register("./sw.js");
+      console.log(sw);
+    })
+
+    const btn = document.querySelector("button");
+    async function subscribe() {
+      let sw = await navigator.serviceWorker.ready;
+      let push = await sw.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: 'Todo'
+      })
+      console.log(JSON.stringify(push));
+    }
+
+    btn.onclick = async () => await subscribe();
+
+  </script>
+</body>
+
+</html>
